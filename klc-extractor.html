@@ -64,6 +64,7 @@ function Play(text){
 		if(output.length>0)
 			$output.prepend("\n"+(name?name:'kb-code')+":{\n\tname:"+(name?name:'kb-code')+",\n\tkeys:{"+output.join(',')+"\n\t}\n},");
 	}catch(e){
+		console.log(e);
 		$output.innerText="An error occurred processing data.";
 	}
 }
@@ -121,7 +122,7 @@ var columns,
 ];
 
 function GetCode(code){
-	if(code.length===1)
+	if(code.length===1 || code=="-1")	// No debería ocurrir, pero por alguna extraña razón en el archivo francés se cuela un -1 hasta aquí.
 		return code;
 	if(code.substr(-1)=="@")
 		code=code.slice(0,-1);
