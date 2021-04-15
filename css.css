@@ -1,0 +1,28 @@
+
+#kb-zone	{fill:#dfd9d9}
+.key-zone	{fill:#efefee}
+.special .key-zone {fill:#e3e3e1}
+.special .key{fill:#22211f}
+
+.key{
+	fill:#22211f;
+	cursor:default;
+	font-family:Mulish,Arial,sans-serif;
+	user-select:none;
+	font-size:11px
+}
+.key.primary{font-size:14px}
+.key.secondary{font-size:9px}
+
+.key-type-z1 .key-zone {fill:url(#pattern-a)}
+.key-type-z2 .key-zone {fill:url(#pattern-b)}
+	
+.background {fill:#efefee}
+.foreground-a {
+	stroke:#fff5c3;
+	stroke-width:3px
+}
+.foreground-b {
+	stroke:#ffdfbe;
+	stroke-width:3px
+}

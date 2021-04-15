@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+    <title>.klc Extractor</title>
+	<meta name=viewport content="width=device-width,initial-scale=1">
+</head>
+<body>
+
+<textarea id=input placeholder="Paste your .klc data here."></textarea>
+<textarea id=output disabled></textarea>
+
+<script>
+console.log(document.getElementById("input"));
+$input=document.getElementById("input");
+$input.onpaste=(e)=>{$input.value="";setTimeout(()=>{
+	columns=[];
+	funcIndex=0;
+	output=[];
+	lines=$input.value.split(/\r\n|\r|\n/);
+	$input.value="";
+	lines.forEach((line)=>{functions[funcIndex](line.trim());});
+	console.log(output.join(','));
+},10)};
+var keyMap={
+	"29":1,		"02":2,		"03":3,		"04":4,		"05":5,		"06":6,		"07":7,		"08":8,		"09":9,		"0a":10,	"0b":11,	"0c":12,	"0d":13,	"0e":14,
+	"10":17,	"11":18,	"12":19,	"13":20,	"14":21,	"15":22,	"16":23,	"17":24,	"18":25,	"19":26,	"1a":27,	"1b":28,
+	"1e":31,	"1f":32,	"20":33,	"21":34,	"22":35,	"23":36,	"24":37,	"25":38,	"26":39,	"27":40,	"28":41,	"2b":42,
+	"2c":46,	"2d":47,	"2e":48,	"2f":49,	"30":50,	"31":51,	"32":52,	"33":53,	"34":54,	"35":55,	"56":45,
+};
+var columns,
+	funcIndex,
+	output,
+	functions=[
+	(line)=>{if(line.substr(0,10)=="SHIFTSTATE")funcIndex++;},
+	(line)=>{
+		if(line.substr(0,6)=="LAYOUT"){funcIndex++;return;}
+		else if(line[0]==0)
+			columns.push(3);
+		else if(line[0]==1)
+			columns.push(4);
+		else if(line[0]==2)
+			columns.push(5);
+		else if(line[0]==6)
+			columns.push(6);
+		else if(line[0]==7)
+			columns.push(7);
+	},
+	(line)=>{
+		if(line.substr(0,7)=="DEADKEY"|| line.substr(0,7)=="KEYNAME"){funcIndex++;return;}
+		line=line.replace(/\s\s+/g,' ');
+		var x=line.split(/\s|\t/);
+		if(keyMap[x[0]]){
+				var keys=[]
+			console.log(line);
+			columns.forEach((i)=>{
+				if(x[i]=="-1")
+					return;
+				let code=GetCode(x[i]);
+				console.log(code);
+				if((i===3 || i==4)&& x[3]==x[4].toLowerCase()){
+					if(i==3)return;
+					keys.push(`{x:20,y:25,class:"key primary","text-anchor":"middle",text:"${code}"}`);
+				}else
+					keys.push(`{x:${([3,4].includes(i)?10:30)},y:${([4].includes(i)?15:28)},class:"key${([3].includes(i)?"":" secondary")}",text:"${code.replace('"','\\').replace('\\','\\\\')}"}`);
+				
+			});
+			output.push(`\n${keyMap[x[0]]}:[${keys.join(',')}]`);
+		}
+	},
+	(line)=>{},
+];
+
+function GetCode(code){
+	if(code.length===1)
+		return code;
+	if(code.substr(-1)=="@")
+		code=code.slice(0,-1);
+	return String.fromCodePoint('0x'+code);
+}
+</script>
+
+</body>
+</html>
