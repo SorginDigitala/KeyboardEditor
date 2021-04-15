@@ -4,24 +4,71 @@
 	<meta charset=utf-8>
     <title>.klc Extractor</title>
 	<meta name=viewport content="width=device-width,initial-scale=1">
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			}
+		body{
+			height:100vh;
+			width:100vw;
+		}
+		#input{
+			width:1px;
+			height:1px;
+			position:absolute;
+			left:-10px;
+		}
+	</style>
 </head>
 <body>
-
-<textarea id=input placeholder="Paste your .klc data here."></textarea>
-<textarea id=output disabled></textarea>
+<textarea id=input></textarea>
+<div>Place or Paste your .klc data here</div>
+<pre id=output><pre>
 
 <script>
-console.log(document.getElementById("input"));
 $input=document.getElementById("input");
-$input.onpaste=(e)=>{$input.value="";setTimeout(()=>{
-	columns=[];
-	funcIndex=0;
-	output=[];
-	lines=$input.value.split(/\r\n|\r|\n/);
-	$input.value="";
-	lines.forEach((line)=>{functions[funcIndex](line.trim());});
-	console.log(output.join(','));
-},10)};
+$output=document.getElementById("output");
+
+//Force focus
+setInterval(()=>{$input.focus()},10);
+
+//Detect drop files
+document.body.ondragover=(e)=>{e.preventDefault();e.stopPropagation()}
+document.body.ondrop=(e)=>{
+	e.preventDefault();
+	e.stopPropagation();
+    var file=e.dataTransfer.files[0],
+        reader = new FileReader();
+    reader.onload = function(event){
+        Play(event.target.result);
+    };
+    reader.readAsText(file);
+}
+
+//detect Paste
+$input.onpaste=(e)=>{$input.value="";setTimeout(()=>{Play($input.value)},10)};
+
+function Play(text){
+	try{
+		$input.value="";
+		columns=[];
+		funcIndex=0;
+		output=[];
+		lines=text.split(/\r\n|\r|\n/);
+		lines.forEach((line)=>{functions[funcIndex](line.trim());});
+		if(output.length>0)
+			$output.innerText=output.join(',');
+		else
+			$output.innerText="No data detected.";
+	}catch(e){
+		$output.innerText="An error occurred processing data.";
+	}
+}
+
+
+
 var keyMap={
 	"29":1,		"02":2,		"03":3,		"04":4,		"05":5,		"06":6,		"07":7,		"08":8,		"09":9,		"0a":10,	"0b":11,	"0c":12,	"0d":13,	"0e":14,
 	"10":17,	"11":18,	"12":19,	"13":20,	"14":21,	"15":22,	"16":23,	"17":24,	"18":25,	"19":26,	"1a":27,	"1b":28,
