@@ -14,54 +14,55 @@
 			height:100vh;
 			width:100vw;
 		}
-		#input{
-			width:1px;
-			height:1px;
-			position:absolute;
-			left:-10px;
+		#hint{
+		user-select:none;
 		}
 	</style>
 </head>
 <body>
-<textarea id=input></textarea>
-<div>Drop or Paste your .klc data here</div>
+<div id=hint>Drop your .klc data here</div>
 <pre id=output><pre>
 
 <script>
-$input=document.getElementById("input");
 $output=document.getElementById("output");
-
-//Force focus
-setInterval(()=>{$input.focus()},10);
 
 //Detect drop files
 document.body.ondragover=(e)=>{e.preventDefault();e.stopPropagation()}
 document.body.ondrop=(e)=>{
 	e.preventDefault();
 	e.stopPropagation();
-    var file=e.dataTransfer.files[0],
-        reader = new FileReader();
-    reader.onload = function(event){
-        Play(event.target.result);
-    };
-    reader.readAsText(file);
+	var files=e.dataTransfer.files;
+	for(var t in files){
+		var reader=new FileReader();
+		reader.onload = function(e){
+			Play(e.target.result);
+		};
+		reader.readAsText(files[t]);
+	};
 }
 
-//detect Paste
-$input.onpaste=(e)=>{$input.value="";setTimeout(()=>{Play($input.value)},10)};
+/*
+layers:
+esQwerty:{
+	name:"[es] QWERTY",
+	keys:{
+		2:{
+			key:"A",
+			data:[{x:10,y:28,class:"key",text:"1"},{x:10,y:15,class:"key secondary",text:"!"},{x:30,y:28,class:"key secondary",text:"|"}]
+		},
+	}
+}
 
+*/
 function Play(text){
 	try{
-		$input.value="";
 		columns=[];
 		funcIndex=0;
 		output=[];
 		lines=text.split(/\r\n|\r|\n/);
 		lines.forEach((line)=>{functions[funcIndex](line.trim());});
 		if(output.length>0)
-			$output.innerText=output.join(',');
-		else
-			$output.innerText="No data detected.";
+			$output.prepend("\n"+(name?name:'kb-code')+":{\n\tname:"+(name?name:'kb-code')+",\n\tkeys:{"+output.join(',')+"\n\t}\n},");
 	}catch(e){
 		$output.innerText="An error occurred processing data.";
 	}
@@ -76,10 +77,11 @@ var keyMap={
 	"2c":46,	"2d":47,	"2e":48,	"2f":49,	"30":50,	"31":51,	"32":52,	"33":53,	"34":54,	"35":55,	"56":45,
 };
 var columns,
+	name,
 	funcIndex,
 	output,
 	functions=[
-	(line)=>{if(line.substr(0,10)=="SHIFTSTATE")funcIndex++;},
+	(line)=>{if(line.substr(0,10)=="LOCALENAME")name=line.split(/\s|\t/)[1];if(line.substr(0,10)=="SHIFTSTATE")funcIndex++;},
 	(line)=>{
 		if(line.substr(0,6)=="LAYOUT"){funcIndex++;return;}
 		else if(line[0]==0)
@@ -101,18 +103,18 @@ var columns,
 				var keys=[]
 			console.log(line);
 			columns.forEach((i)=>{
-				if(x[i]=="-1")
+				if(x[i]=="-1" || ["001b","001c","001d"].includes(x[i]))
 					return;
 				let code=GetCode(x[i]);
 				console.log(code);
-				if((i===3 || i==4)&& x[3]==x[4].toLowerCase()){
+				if((i===3 || i===4)&& GetCode(x[3])==GetCode(x[4]).toLowerCase()){
 					if(i==3)return;
-					keys.push(`{x:20,y:25,class:"key primary","text-anchor":"middle",text:"${code}"}`);
+					keys.push(`{x:20,y:25,class:"primary","text-anchor":"middle",text:"${code}"}`);
 				}else
-					keys.push(`{x:${([3,4].includes(i)?10:30)},y:${([4].includes(i)?15:28)},class:"key${([3].includes(i)?"":" secondary")}",text:"${code.replace('"','\\').replace('\\','\\\\')}"}`);
+					keys.push(`{x:${([3,4].includes(i)?10:30)},y:${([4].includes(i)?15:28)},${([3].includes(i)?"":'class:"secondary",')}text:"${code.replace('"','\\').replace('\\','\\\\')}"}`);
 				
 			});
-			output.push(`\n${keyMap[x[0]]}:[${keys.join(',')}]`);
+			output.push(`\n\t${keyMap[x[0]]}:{key:"${x[1]}",data:[${keys.join(',')}]}`);
 		}
 	},
 	(line)=>{},
