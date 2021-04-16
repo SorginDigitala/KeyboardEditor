@@ -1,11 +1,11 @@
-var $keyboard=document.getElementById("keyboard");
-var $zone=document.getElementById("kb-zone");
+'use strict';
 
 /*
-{
-	key:""
-	attr:{}
-	data:{}
+layout={
+	key		:""			// keyCode
+	attr	:{}			// svg attr (position, class)
+	data	:{}			// virtual key data
+	style:	:{}			// rect style
 }
 
 
@@ -20,616 +20,194 @@ esQwerty:{
 	}
 }
 
-		<option val=ukQWERTY>🇬🇧 QWERTY</option>
-		<option val=ukDvorak>🇬🇧 Dvorak</option>
+		
 		<option val=KeyBoardEvent>KeyBoardEvent</option>
 		<option val=>KeyBoard POSITION</option>
 */
 
-var layouts={
+const layouts={
 top:{
 	110:{
 		attr:{x:0,		y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"Esc"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"Esc"}]
 	},
 	112:{
 		attr:{x:84,		y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F1"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F1"}]
 	},
 	113:{
 		attr:{x:126,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F2"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F2"}]
 	},
 	114:{
 		attr:{x:168,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F3"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F3"}]
 	},
 	115:{
 		attr:{x:210,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F4"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F4"}]
 	},
 	116:{
 		attr:{x:274,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F5"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F5"}]
 	},
 	117:{
 		attr:{x:316,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F6"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F6"}]
 	},
 	118:{
 		attr:{x:358,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F7"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F7"}]
 	},
 	119:{
 		attr:{x:400,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F8"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F8"}]
 	},
 	120:{
 		attr:{x:464,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F9"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F9"}]
 	},
 	121:{
 		attr:{x:506,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F10"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F10"}]
 	},
 	122:{
 		attr:{x:548,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F11"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F11"}]
 	},
 	123:{
 		attr:{x:590,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"F12"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"F12"}]
 	},
 	124:{
 		attr:{x:638,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"Impr"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"Impr"}]
 	},
 	125:{
 		attr:{x:680,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"Bloq"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"Bloq"}]
 	},
 	126:{
 		attr:{x:722,	y:0,	width:40,	height:25},
-		data:[
-		{
-			x:20,
-			y:17,
-			"text-anchor":"middle",
-			class:"key",
-			text:"Pause"
-		}
-		]
+		data:[{x:20,y:17,"text-anchor":"middle",class:"key",text:"Pause"}]
 	},
 	75:{
 		attr:{x:638,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:16,
-			class:"key",
-			"text-anchor":"middle",
-			text:"Insert"
-		}
-		]
+		data:[{x:20,y:16,class:"key","text-anchor":"middle",text:"Insert"}]
 	},
 	80:{
 		attr:{x:680,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:16,
-			class:"key",
-			"text-anchor":"middle",
-			text:"Home"
-		}
-		]
+		data:[{x:20,y:16,class:"key","text-anchor":"middle",text:"Home"}]
 	},
 	85:{
 		attr:{x:722,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Page"
-		},
-		{
-			x:5,
-			y:28,
-			class:"key",
-			text:"Up"
-		},
-		]
+		data:[{x:5,y:16,class:"key",text:"Page"},{x:5,y:28,class:"key",text:"Up"}]
 	},
 	76:{
 		attr:{x:638,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:16,
-			class:"key",
-			"text-anchor":"middle",
-			text:"Delete"
-		}
-		]
+		data:[{x:20,y:16,class:"key","text-anchor":"middle",text:"Delete"}]
 	},
 	81:{
 		attr:{x:680,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:16,
-			class:"key",
-			"text-anchor":"middle",
-			text:"End"
-		}
-		]
+		data:[{x:20,y:16,class:"key","text-anchor":"middle",text:"End"}]
 	},
 	86:{
 		attr:{x:722,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Page"
-		},
-		{
-			x:5,
-			y:28,
-			class:"key",
-			text:"Down"
-		},
-		]
+		data:[{x:5,y:16,class:"key",text:"Page"},{x:5,y:28,class:"key",text:"Down"}]
 	},
 
 	//arrows
 	83:{
 		attr:{x:680,	y:154,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:25,
-			class:"key primary",
-			"text-anchor":"middle",
-			text:"↑"
-		}
-		]
+		data:[{x:20,y:25,class:"key primary","text-anchor":"middle",text:"↑"}]
 	},
 	79:{
 		attr:{x:638,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:25,
-			class:"key primary",
-			"text-anchor":"middle",
-			text:"←"
-		}
-		]
+		data:[{x:20,y:25,class:"key primary","text-anchor":"middle",text:"←"}]
 	},
 	84:{
 		attr:{x:680,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:25,
-			class:"key primary",
-			"text-anchor":"middle",
-			text:"↓"
-		}
-		]
+		data:[{x:20,y:25,class:"key primary","text-anchor":"middle",text:"↓"}]
 	},
 	89:{
 		attr:{x:722,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:20,
-			y:25,
-			class:"key primary",
-			"text-anchor":"middle",
-			text:"→"
-		}
-		]
+		data:[{x:20,y:25,class:"key primary","text-anchor":"middle",text:"→"}]
 	},
 },
 keypad:{
-	//keypad
 	90:{
 		attr:{x:770,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Num"
-		},
-		{
-			x:5,
-			y:28,
-			class:"key",
-			text:"Lock"
-		}
-		]
+		data:[{x:5,y:16,class:"key",text:"Num"},{x:5,y:28,class:"key",text:"Lock"}]
 	},
 	91:{
 		attr:{x:770,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"7"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"Home"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"7"},{x:35,y:32,class:"key","text-anchor":"end",text:"Home"}]
 	},
 	92:{
 		attr:{x:770,	y:112,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"4"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"←"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"4"},{x:35,y:32,class:"key","text-anchor":"end",text:"←"}]
 	},
 	93:{
 		attr:{x:770,	y:154,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"1"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"End"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"1"},{x:35,y:32,class:"key","text-anchor":"end",text:"End"}]
 	},
 	94:{
 		attr:{x:770,	y:196,	width:82,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"0"
-		},
-		{
-			x:8,
-			y:32,
-			class:"key",
-			text:"Ins"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"0"},{x:8,y:32,class:"key",text:"Ins"}]
 	},
 	95:{
 		attr:{x:812,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"⁄"
-		}
-		]
+		data:[{x:15,y:25,class:"key primary",text:"⁄"}]
 	},
 	96:{
 		attr:{x:812,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"8"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"↑"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"8"},{x:35,y:32,class:"key","text-anchor":"end",text:"↑"}]
 	},
 	97:{
 		attr:{x:812,	y:112,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"5"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"5"}]
 	},
 	98:{
 		attr:{x:812,	y:154,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"2"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"↓"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"2"},{x:35,y:32,class:"key","text-anchor":"end",text:"↓"}]
 	},
 	100:{
 		attr:{x:854,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"×"
-		},
-		]
+		data:[{x:15,y:25,class:"key primary",text:"×"}]
 	},
 	101:{
 		attr:{x:854,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"9"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"Pg Up"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"9"},{x:35,y:32,class:"key","text-anchor":"end",text:"Pg Up"}]
 	},
 	102:{
 		attr:{x:854,	y:112,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"6"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"→"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"6"},{x:35,y:32,class:"key","text-anchor":"end",text:"→"}]
 	},
 	103:{
 		attr:{x:854,	y:154,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"3"
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"Pg Dn"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"3"},{x:35,y:32,class:"key","text-anchor":"end",text:"Pg Dn"}]
 	},
 	104:{
 		attr:{x:854,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"."
-		},
-		{
-			x:35,
-			y:32,
-			class:"key",
-			"text-anchor":"end",
-			text:"Del"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"."},{x:35,y:32,class:"key","text-anchor":"end",text:"Del"}]
 	},
 	105:{
 		attr:{x:896,	y:28,	width:40,	height:40},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"−"
-		},
-		]
+		data:[{x:15,y:25,class:"key primary",text:"−"}]
 	},
 	106:{
 		attr:{x:896,	y:70,	width:40,	height:82},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"+"
-		},
-		]
+		data:[{x:15,y:25,class:"key primary",text:"+"}]
 	},
 	108:{
 		attr:{x:896,	y:154,	width:40,	height:82},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:5,y:16,class:"key",text:"Enter"}]
 	},
 },
 rightFull:{
 	94:{
 		attr:{x:770,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:8,
-			y:18,
-			class:"key primary",
-			text:"0"
-		},
-		{
-			x:8,
-			y:32,
-			class:"key",
-			text:"Ins"
-		}
-		]
+		data:[{x:8,y:18,class:"key primary",text:"0"},{x:8,y:32,class:"key",text:"Ins"}]
 	},
 	99:{
 		attr:{x:812,	y:196,	width:40,	height:40},
@@ -637,60 +215,25 @@ rightFull:{
 	},
 	106:{
 		attr:{x:896,	y:70,	width:40,	height:40},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"+"
-		},
-		]
+		data:[{x:15,y:25,class:"key primary",text:"+"},]
 	},
 	107:{
 		attr:{x:896,	y:112,	width:40,	height:40},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key primary",
-			text:"+"
-		},
-		]
+		data:[{x:15,y:25,class:"key primary",text:"+"}]
 	},
 	108:{
 		attr:{x:896,	y:154,	width:40,	height:40},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:5,y:16,class:"key",text:"Enter"}]
 	},
 	109:{
 		attr:{x:896,	y:196,	width:40,	height:40},
-		data:[
-		{
-			x:5,
-			y:16,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:5,y:16,class:"key",text:"Enter"}]
 	},
 },
 bottom:{
 	58:{
 		attr:{x:0,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Ctrl"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Ctrl"}]
 	},
 	59:{
 		attr:{x:52,	y:168,	width:50,	height:40,	class:"special"},
@@ -698,14 +241,7 @@ bottom:{
 	},
 	60:{
 		attr:{x:104,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Alt"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Alt"}]
 	},
 	61:{
 		attr:{x:156,	y:168,	width:317,	height:40},
@@ -713,14 +249,7 @@ bottom:{
 	},
 	62:{
 		attr:{x:475,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Alt Gr"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Alt Gr"}]
 	},
 	63:{
 		attr:{x:527,	y:168,	width:50,	height:40,	class:"special"},
@@ -728,63 +257,25 @@ bottom:{
 	},
 	64:{
 		attr:{x:579,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Ctrl"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Ctrl"}]
 	},
 },
 bottomJIS:{
-	111:{
+	150:{
 		attr:{x:156,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:25,
-			y:25,
-			class:"key",
-			"text-anchor":"middle",
-			text:"無変換"
-		},
-		]
+		data:[{x:25,y:25,class:"key","text-anchor":"middle",text:"無変換"}]
 	},
 	61:{
 		attr:{x:208,	y:168,	width:161,	height:40},
 		data:[]
 	},
-	112:{
+	151:{
 		attr:{x:371,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:25,
-			y:25,
-			class:"key",
-			"text-anchor":"middle",
-			text:"変換"
-		},
-		]
+		data:[{x:25,y:25,class:"key","text-anchor":"middle",text:"変換"}]
 	},
-	113:{
+	152:{
 		attr:{x:423,	y:168,	width:50,	height:40,	class:"special"},
-		data:[
-		{
-			x:25,
-			y:15,
-			class:"key secondary",
-			"text-anchor":"middle",
-			text:"カタカナ"
-		},
-		{
-			x:25,
-			y:30,
-			class:"key secondary",
-			"text-anchor":"middle",
-			text:" ひらがな"
-		},
-		]
+		data:[{x:25,y:15,class:"key secondary","text-anchor":"middle",text:"カタカナ"},{x:25,y:30,class:"key secondary","text-anchor":"middle",text:" ひらがな"}]
 	},
 },
 base:{
@@ -842,14 +333,7 @@ base:{
 	},
 	16:{
 		attr:{x:0,	y:42,	width:63,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Tab"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Tab"}]
 	},
 	17:{
 		attr:{x:65,	y:42,	width:40,	height:40},
@@ -902,20 +386,7 @@ base:{
 	
 	30:{
 		attr:{x:0,	y:84,	width:70,	height:40,class:"special"},
-		data:[
-		{
-			x:12,
-			y:15,
-			class:"key",
-			text:"Caps"
-		},
-		{
-			x:12,
-			y:30,
-			class:"key",
-			text:"Lock"
-		},
-		]
+		data:[{x:12,y:15,class:"key",text:"Caps"},{x:12,y:30,class:"key",text:"Lock"}]
 	},
 	31:{
 		attr:{x:72,	y:84,	width:40,	height:40},
@@ -1005,25 +476,11 @@ base:{
 ISO:{
 	14:{
 		attr:{x:546,	y:0,	width:83,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Backspace"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Backspace"}]
 	},
 	29:{
 		attr:{x:569,	y:42,	width:60,	height:82,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Enter"}]
 	},
 	42:{
 		attr:{x:534,	y:84,	width:40,	height:40},
@@ -1031,14 +488,7 @@ ISO:{
 	},
 	44:{
 		attr:{x:0,	y:126,	width:50,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 	45:{
 		attr:{x:52,	y:126,	width:40,	height:40},
@@ -1046,27 +496,13 @@ ISO:{
 	},
 	57:{
 		attr:{x:514,	y:126,	width:115,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 },
 ANSI:{
 	14:{
 		attr:{x:546,	y:0,	width:83,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Backspace"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Backspace"}]
 	},
 	42:{
 		attr:{x:569,	y:42,	width:60,	height:40},
@@ -1074,36 +510,15 @@ ANSI:{
 	},
 	29:{
 		attr:{x:534,	y:84,	width:95,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Enter"}]
 	},
 	44:{
 		attr:{x:0,	y:126,	width:92,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 	57:{
 		attr:{x:514,	y:126,	width:115,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 },
 JIS:{
@@ -1117,14 +532,7 @@ JIS:{
 	},
 	29:{
 		attr:{x:569,	y:42,	width:60,	height:82,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Enter"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Enter"}]
 	},
 	42:{
 		attr:{x:534,	y:84,	width:40,	height:40},
@@ -1132,14 +540,7 @@ JIS:{
 	},
 	44:{
 		attr:{x:0,	y:126,	width:92,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 	56:{
 		attr:{x:514,	y:126,	width:40,	height:40},
@@ -1147,19 +548,12 @@ JIS:{
 	},
 	57:{
 		attr:{x:556,	y:126,	width:73,	height:40,class:"special"},
-		data:[
-		{
-			x:15,
-			y:25,
-			class:"key",
-			text:"Shift"
-		},
-		]
+		data:[{x:15,y:25,class:"key",text:"Shift"}]
 	},
 },
 }
 
-var layers={
+const layers={
 esDvorak:{
 	name:"🇪🇸 Dvorak",
 	keys:{
@@ -1640,7 +1034,137 @@ trF:{
 },
 
 
+
+/* Special layers	*/
+keyboardEvent:{
+	name:"Js KeyBoardEvent",
+	keys:{ 
+	110:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Escape"}]},
+	112:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F1"}]},
+	113:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F2"}]},
+	114:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F3"}]},
+	115:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F4"}]},
+	116:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F5"}]},
+	117:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F6"}]},
+	118:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F7"}]},
+	119:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F8"}]},
+	120:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F9"}]},
+	121:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F10"}]},
+	122:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F11"}]},
+	123:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"F12"}]},
+	124:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:""}]},
+	125:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:""}]},
+	126:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:""}]},
+	75:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Insert"}]},
+	76:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Delete"}]},
+	80:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Home"}]},
+	81:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"End"}]},
+	85:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"PageUp"}]},
+	86:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"PageDown"}]},
+
+	79:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"ArrowLeft"}]},
+	83:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"ArrowUp"}]},
+	84:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"ArrowDown"}]},
+	89:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"ArrowRight"}]},
+
+	90:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumLock"}]},
+	91:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad7"}]},
+	92:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad4"}]},
+	93:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad1"}]},
+	94:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad0"}]},
+	95:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadDivide"}]},
+	96:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad8"}]},
+	97:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad5"}]},
+	98:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad2"}]},
+	100:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadMultiply"}]},
+	101:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad9"}]},
+	102:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad6"}]},
+	103:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"Numpad3"}]},
+	104:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadDecimal"}]},
+	105:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadSubtract"}]},
+	106:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadAdd"}]},
+	108:{data:[{x:20,y:15,class:"secondary","text-anchor":"middle",text:"NumpadEnter"}]},
+
+	58:{data:[{x:25,y:25,class:"secondary","text-anchor":"middle",text:"ControlLeft"}]},
+	59:{data:[{x:25,y:25,class:"secondary","text-anchor":"middle",text:"OSLeft"}]},
+	60:{data:[{x:25,y:25,class:"secondary","text-anchor":"middle",text:"AltLeft"}]},
+	61:{data:[{x:15,y:25,class:"secondary",text:"Space"}]},
+	62:{data:[{x:25,y:25,class:"secondary","text-anchor":"middle",text:"AltRight"}]},
+	64:{data:[{x:25,y:25,class:"secondary","text-anchor":"middle",text:"ControlRight"}]},
+
+	14:{data:[{x:10,y:25,class:"secondary",text:"Backspace"}]},
+	16:{data:[{x:10,y:25,class:"secondary",text:"Tab"}]},
+	30:{data:[{x:10,y:25,class:"secondary",text:"CapsLock"}]},
+	44:{data:[{x:10,y:25,class:"secondary",text:"ShiftLeft"}]},
+	29:{data:[{x:10,y:25,class:"secondary",text:"Enter"}]},
+	57:{data:[{x:10,y:25,class:"secondary",text:"ShiftRight"}]},
+
+	1:{key:"OEM_5",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Backquote"}]},
+	2:{key:"1",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit1"}]},
+	3:{key:"2",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit2"}]},
+	4:{key:"3",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit3"}]},
+	5:{key:"4",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit4"}]},
+	6:{key:"5",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit5"}]},
+	7:{key:"6",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit6"}]},
+	8:{key:"7",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit7"}]},
+	9:{key:"8",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit8"}]},
+	10:{key:"9",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit9"}]},
+	11:{key:"0",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Digit0"}]},
+	12:{key:"OEM_MINUS",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Minus"}]},
+	13:{key:"OEM_EQUAL",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Equal"}]},
+	15:{key:"OEM_yen",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"IntlYen"}]},
+	17:{key:"",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyQ"}]},
+	18:{key:"Q",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyW"}]},
+	19:{key:"W",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyE"}]},
+	20:{key:"E",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyR"}]},
+	21:{key:"R",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyT"}]},
+	22:{key:"T",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyY"}]},
+	23:{key:"Y",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyU"}]},
+	24:{key:"U",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyI"}]},
+	25:{key:"I",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyO"}]},
+	26:{key:"O",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyP"}]},
+	27:{key:"OEM_1",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"BracketLeft"}]},
+	28:{key:"OEM_PLUS",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"BracketRight"}]},
+	31:{key:"A",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyA"}]},
+	32:{key:"S",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyS"}]},
+	33:{key:"D",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyD"}]},
+	34:{key:"F",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyF"}]},
+	35:{key:"G",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyG"}]},
+	36:{key:"H",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyH"}]},
+	37:{key:"J",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyJ"}]},
+	38:{key:"K",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyK"}]},
+	39:{key:"L",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyL"}]},
+	40:{key:"OEM_6",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Semicolon"}]},
+	41:{key:"OEM_7",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Quote"}]},
+	42:{key:"OEM_2",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Backslash"}]},
+	45:{key:"OEM_MINUS",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"IntlBackslash"}]},
+	46:{key:"Z",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyZ"}]},
+	47:{key:"X",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyX"}]},
+	48:{key:"C",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyC"}]},
+	49:{key:"V",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyV"}]},
+	50:{key:"B",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyB"}]},
+	51:{key:"N",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyN"}]},
+	52:{key:"M",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"KeyM"}]},
+	53:{key:"OEM_COMMA",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Comma"}]},
+	54:{key:"OEM_PERIOD",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Period"}]},
+	55:{key:"OEM_102",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"Slash"}]},
+	56:{key:"OEM_ro",data:[{x:20,y:25,class:"secondary","text-anchor":"middle",text:"IntlRo"}]},
+	}
+},
 }
+
+
+
+
+
+
+var defaultRect={
+	class:"key-zone",
+	x:0,
+	y:0,
+	width:"100%",
+	height:"100%"
+};
 
 var phisicalLayout={
 	design:[
@@ -1669,11 +1193,12 @@ for(let key in phisicalLayout){
 	document.getElementById("controls").appendChild(select);
 }
 
-$design=document.getElementById("design");
-$layout=document.getElementById("layout");
-$layer=document.getElementById("layer");
-$theme=document.getElementById("theme");
-function OnControlsChange(){CreateKeyboard($design.value,$layout.value,$layer.value,$theme.value)}
+const $keyboard=document.getElementById("keyboard"),
+	$zone=document.getElementById("kb-zone"),
+	$design=document.getElementById("design"),
+	$layout=document.getElementById("layout"),
+	$layer=document.getElementById("layer"),
+	$theme=document.getElementById("theme");
 
 for(let k in layers){
 	var option=document.createElement("option");
@@ -1693,24 +1218,26 @@ if(window.location.hash){
 OnControlsChange();
 
 
+function OnControlsChange(){CreateKeyboard($design.value,$layout.value,$layer.value,$theme.value)}
 function CreateKeyboard(design,layout,layer,theme){
 	$keyboard.querySelectorAll('svg').forEach((e)=>{e.remove()});
 	window.location.hash=design+"-"+layout+"-"+layer+"-"+theme;
 
+	let mlayouts=JSON.parse(JSON.stringify(layouts));// https://stackoverflow.com/a/122704/3875360
+
 	var paddingTop=30;
 	if(design=="10x"){
-		GenerateSide(2,2,PrintKeyContent({...layouts.keypad,...layouts.top},layers[layer]));
+		GenerateSide(2,2,PrintKeyContent({...mlayouts.keypad,...mlayouts.top},layers[layer]));
 		$keyboard.setAttribute("viewBox","0 0 940 240");
 	}else if(design=="80"){
-		GenerateSide(2,2,layouts.top);
+		GenerateSide(2,2,PrintKeyContent(mlayouts.top,layers[layer]));
 		$keyboard.setAttribute("viewBox","0 0 766 240");
 	}else if(design=="60"){
 		paddingTop=2;
 		$keyboard.setAttribute("viewBox","0 0 633 212");
 	}
 	
-	let x=PrintKeyContent({...layouts.base,...layouts[layout],...(layout=="JIS"?{...layouts.bottom,...layouts.bottomJIS}:layouts.bottom)},layers[layer]);
-	console.log(x);
+	let x=PrintKeyContent({...mlayouts.base,...mlayouts[layout],...(layout=="JIS"?{...mlayouts.bottom,...mlayouts.bottomJIS}:mlayouts.bottom)},layers[layer]);
 	GenerateSide(2,paddingTop,x);
 
 	if(layout!="ANSI"){//pintamos la tecla enter
@@ -1722,21 +1249,22 @@ function CreateKeyboard(design,layout,layer,theme){
 	}
 }
 
-function PrintKeyContent(layer,keys){
-	for(var x in keys.keys){
-		if(layer[x]){
-			layer[x].key=keys.keys[x].key;
-			layer[x].data=keys.keys[x].data;
+function PrintKeyContent(mLayout,mLayer){
+	for(let x in mLayer.keys){
+		let xx=mLayer.keys[x];
+		if(mLayout[x]){
+			mLayout[x].key	=xx.key;
+			mLayout[x].data	=xx.data;
 		}
 	}
-	return layer;
+	return mLayout;
 }
 
 function GenerateSide(x,y,layer){
 	let svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
 	svg.setAttribute("x",x);
 	svg.setAttribute("y",y);
-	for(k in layer){
+	for(let k in layer){
 		let l=layer[k];
 		let key=document.createElementNS("http://www.w3.org/2000/svg","svg");
 		
@@ -1752,14 +1280,10 @@ function GenerateSide(x,y,layer){
 	$keyboard.appendChild(svg);
 }
 
-
 function GenerateKeyContent(container,x){
 	let key=document.createElementNS("http://www.w3.org/2000/svg","rect");
-	key.classList.add("key-zone");
-	key.setAttribute("x",0);
-	key.setAttribute("y",0);
-	key.setAttribute("width","100%");
-	key.setAttribute("height","100%");
+	for(let s in defaultRect)
+		key.setAttribute(s,defaultRect[s]);
 	container.appendChild(key);
 	
 	for(let y in x){
