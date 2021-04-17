@@ -1,7 +1,14 @@
+*{
+	padding:0;
+	margin:0;
+	box-sizing:border-box
+}
 
 #kb-zone			{fill:#dfd9d9}
 .key-zone			{fill:#efefee}
 .special .key-zone	{fill:#e3e3e1}
+.hotkey .key-zone	{fill:#dca}
+:hover>.key-zone{stroke:#cbb}
 
 svg svg{cursor:pointer}
 svg text{
@@ -12,16 +19,10 @@ svg text{
 text.primary{font-size:14px}
 text.secondary{font-size:9px}
 
-:hover>.key-zone {fill:url(#pattern-b)}
-.pattern1 .key-zone {fill:url(#pattern-a)}
-.pattern2 .key-zone {fill:url(#pattern-b)}
-	
-.background {fill:#efefee}
-.foreground-a {
-	stroke:#fff5c3;
-	stroke-width:3px
-}
-.foreground-b {
-	stroke:#ffdfbe;
-	stroke-width:3px
+#hint{
+	display:none;
+	position:absolute;
+	background:#fff;
+	width:280px;
+	padding:8px;
 }
