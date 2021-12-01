@@ -4,20 +4,20 @@
 	box-sizing:border-box
 }
 
-#kb-zone			{fill:#dfd9d9}
-.key-zone			{fill:#efefee}
-.special .key-zone	{fill:#e3e3e1}
+#kb-zone			{fill:#d5d5d5}
+.key-zone			{fill:#efefef}
+.special .key-zone	{fill:#e3e3e3}
 .hotkey .key-zone	{fill:#dca}
 :hover>.key-zone{stroke:#cbb}
 
-svg svg{cursor:pointer}
-svg text{
+#keyboard svg{cursor:pointer}
+#keyboard text{
 	font-family:Mulish,Arial,sans-serif;
 	font-size:11px;
 	user-select:none;
 }
-text.primary{font-size:14px}
-text.secondary{font-size:9px}
+#keyboard text.primary{font-size:14px}
+#keyboard text.secondary{font-size:9px}
 
 #hint{
 	display:none;
