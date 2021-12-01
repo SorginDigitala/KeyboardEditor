@@ -15,10 +15,52 @@
 </p>
 
 <form id=controls></form>
-<div id=hint></div>
 
-<svg id=keyboard viewBox="0 0 940 240">
-	<rect id=kb-zone x=0 y=0 width=942 height=240></rect>
-</svg>
+<svg id=keyboard viewBox="0 0 940 240"><rect id=kb-zone x=0 y=0 width=942 height=240></rect></svg>
+<div id=keyboard_hint></div>
+
+<script>
+
+for(let key in phisicalLayout){
+	let select=document.createElement("select");
+	select.id=key;
+	select.onchange=OnControlsChange;
+	for(let k in phisicalLayout[key]){
+		var option=document.createElement("option");
+		option.value=phisicalLayout[key][k].id;
+		option.text=phisicalLayout[key][k].name;
+		select.appendChild(option);
+	}
+	controls.appendChild(select);
+}
+
+
+function OnHashChange(){
+	let hash=location.hash.substr(1).split('-');
+	hash.forEach((x)=>{
+		let y=document.querySelector("option[value='"+x+"']");
+		if(y)
+			y.selected="1";
+	});
+	OnControlsChange();
+}
+
+function OnControlsChange(){
+	const design=phisicalLayout.design.find(e=>e.id==document.getElementById("design").value)
+		layer	=phisicalLayout.layer.find(e=>e.id==document.getElementById("layer").value),
+		layout	=phisicalLayout.layout.find(e=>e.id==document.getElementById("layout").value),
+		theme	=phisicalLayout.theme.find(e=>e.id==document.getElementById("theme").value);
+	location.hash=design.id+"-"+layout.id+"-"+layer.id+"-"+theme.id;
+	kb_layout.get_layer(layer,e=>kb_layout.CreateKeyboard(document.getElementById("keyboard"),design,layout,layer,theme));
+}
+
+window.onload=e=>{
+	window.onhashchange=OnHashChange;
+	if(location.hash)
+		OnHashChange();
+	else
+		OnControlsChange();
+}
+</script>
 </body>
 </html>
